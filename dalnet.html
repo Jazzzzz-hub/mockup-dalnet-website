@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#050b12">
+  <title>The DALnet IRC Network</title>
+  <link rel="shortcut icon" href="https://www.dal.net/favicon.ico">
+  <link rel="alternate" type="application/rss+xml" title="DALnet News Feed" href="https://www.dal.net/news/rss.php">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="network-bg" aria-hidden="true"></canvas>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="shell header-main">
+      <a class="brand" href="https://www.dal.net/" aria-label="DALnet home">
+        <img src="assets/dalnet-irc-network.png" alt="DALnet IRC Network">
+      </a>
+
+      <div class="header-actions">
+        <form class="site-search" action="https://www.dal.net/search.php" method="get" role="search">
+         <label class="sr-only" for="q">Search DALnet</label>
+         <span class="search-icon" aria-hidden="true">⌕</span>
+         <input id="q" name="q" type="search" placeholder="Search DALnet…" required>
+         <button type="submit" class="search-btn" aria-label="Submit search">
+           <span>→</span>
+         </button>
+        </form>
+        <a class="status-chip" href="https://www.dal.net/servers/">
+          <span class="status-dot"></span>
+          Network online
+        </a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+      </div>
+    </div>
+
+    <nav class="primary-nav" id="primary-nav" aria-label="Main navigation">
+      <div class="shell nav-shell">
+        <a class="active" href="https://www.dal.net/">Home</a>
+
+        <div class="nav-group">
+          <button type="button" aria-expanded="false" onclick="window.location.href='https://www.dal.net/?page=admin-index'">Info</button>
+          <div class="nav-popover wide" onclick="event.stopPropagation();">
+            <a href="https://www.dal.net?page=AUP">Acceptable Use Policy</a>
+            <a href="https://www.dal.net/?page=DMCA">DMCA Registered Agent</a>
+            <a href="https://www.dal.net/?page=emailinfo">Email Address Security</a>
+            <a href="https://www.dal.net?page=DALnet's%20Mass%20Advertising%20Policy">Mass Advertising Policy</a>
+            <a href="https://www.dal.net/?page=DALnet Policies and Procedures">Policies &amp; Procedures</a>
+            <a href="https://www.dal.net/sitemap.php">Site Map</a>
+            <a href="https://www.dal.net/?page=sabuse">Services Abuse</a>
+          </div>
+        </div>
+
+        <a href="https://www.dal.net/news/">News</a>
+
+        <div class="nav-group">
+          <button type="button" aria-expanded="false" onclick="window.location.href='https://www.dal.net/admin/teams.php'">Teams</button>
+          <div class="nav-popover wide" onclick="event.stopPropagation();">
+            <a href="https://www.dal.net/?page=administration">Administration</a>
+            <a href="https://www.dal.net/?page=AOB">AOB</a>
+            <a href="https://www.dal.net/?page=coders">IRCd Coding</a>
+            <a href="https://www.dal.net/?page=documentation-team">Documentation</a>
+            <a href="https://www.dal.net/?page=hc">Help Committee</a>
+            <a href="https://www.dal.net/?page=hostmasters">Hostmasters</a>
+            <a href="https://www.dal.net/kline/">KLine</a>
+            <a href="https://www.dal.net/?page=massads">MassAds</a>
+            <a href="https://www.dal.net/?page=postmasters">Postmasters</a>
+            <a href="https://www.dal.net/?page=routing">Routing</a>
+            <a href="https://www.dal.net/?page=operator-training">Services - Oper Training</a>
+            <a href="https://www.dal.net/?page=sra">Services - Root Admins</a>
+            <a href="https://www.dal.net/?page=webteam">Web Team</a>
+			<a href="https://www.dal.net/admin/teams.php">Teams Listing</a>
+          </div>
+        </div>
+
+        <a href="https://www.dal.net/servers/">Servers</a>
+
+        <div class="nav-group">
+          <button type="button" aria-expanded="false" onclick="window.location.href='https://www.dal.net/software/'">Software</button>
+          <div class="nav-popover wide" onclick="event.stopPropagation();">
+            <a href="https://www.dal.net/?page=IRC Clients">IRC Clients</a>
+            <a href="https://www.dal.net/?page=Bahamut">Bahamut</a>
+            <a href="https://www.dal.net/?page=Bouncers">Bouncers</a>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <button type="button" aria-expanded="false" onclick="window.location.href='https://users.dal.net/'">Users</button>
+          <div class="nav-popover wide" onclick="event.stopPropagation();">
+            <a href="https://users.dal.net/skins.php">Change Website Skin</a>
+            
+            <!-- Nested Side Dropdown for Channels -->
+            <div class="nav-subgroup">
+              <button type="button" class="nav-sub-btn">Channels</button>
+              <div class="nav-popover-side">
+                <a href="https://users.dal.net/chan_changes.php">Channel Recent Changes</a>
+                <a href="https://users.dal.net/chan_info.php">Info a registered channel</a>
+                <a href="https://users.dal.net/chan_search.php">Search Registered Channels</a>
+                <a href="https://users.dal.net/channelops.php">Where am I opped in?</a>
+                <a href="https://users.dal.net/channelsuccessor.php">Where am I Successor in?</a>
+              </div>
+            </div>
+
+            <a href="https://users.dal.net/">DALnet's Users Corner</a>
+            <a href="https://users.dal.net/friends.php">Manage your friend list</a>
+            <a href="https://users.dal.net/profile.php">Modify your online profile</a>
+            <a href="https://users.dal.net/read_memos.php">Read your DALnet memos</a>
+            <a href="https://users.dal.net/messages.php">Read / Leave Message</a>
+            <a href="https://users.dal.net/nick_request.php">Request a Nickname</a>
+            <a href="https://users.dal.net/user_search.php">Search The User Database</a>
+            <a href="https://users.dal.net/web_search.php">Search User Web Sites</a>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <button type="button" aria-expanded="false" onclick="window.location.href='https://www.dal.net/contact/'">Contact</button>
+          <div class="nav-popover wide" onclick="event.stopPropagation();">
+            <a href="https://users.dal.net/karnaf/new.php">Contact Cybercafe</a>
+            <a href="https://www.dal.net/contact/contacthc.php">Help Committee</a>
+            <a href="https://users.dal.net/karnaf/new.php">KLine</a>
+            <a href="https://www.dal.net/contact/contactmassads.php">MassAds</a>
+            <a href="https://www.dal.net/contact/contactweb.php">WebTeam</a>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <button type="button" aria-expanded="false" onclick="window.location.href='https://www.dal.net/?page=help'">Help</button>
+          <div class="nav-popover wide" onclick="event.stopPropagation();">
+            <a href="http://docs.dal.net">Documentation</a>
+            <a href="http://help.dal.net">Help</a>
+            <a href="https://www.dal.net/kb/">KB / FAQ</a>
+            <a href="https://www.dal.net/?page=Mailing List Help">Mailing List Help</a>
+            <a href="https://www.dal.net/?page=Recommended Channels">Recommended Channels</a>
+            <a href="https://www.dal.net/services/">Services</a>
+          </div>
+        </div>
+
+        <a href="https://www.dal.net/kline/">KLine</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="content">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span> EST. 1994 · INTERNET RELAY CHAT</div>
+        <h1>The DALnet<br><span>IRC Network.</span></h1>
+        <p class="hero-lede">A classic IRC network reimagined with a modern front door — live chat, trusted services, volunteer teams and community spaces that still feel active, direct and human.</p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://www.dal.net/webchat/">Launch WebChat <span>↗</span></a>
+          <a class="btn btn-ghost" href="https://www.dal.net/servers/">Browse Servers</a>
+        </div>
+
+        <div class="hero-facts" aria-label="DALnet network facts">
+          <div><strong>1994</strong><span>Founded</span></div>
+          <div><strong>NickServ</strong><span>Identity services</span></div>
+          <div><strong>#Help</strong><span>Live assistance</span></div>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="hero-stack">
+          <article class="signal-card glow-card">
+            <span class="signal-label">NETWORK STATUS</span>
+            <h3>Built for live conversation.</h3>
+            <p>Chat in real time, register your nickname, protect channels and reach volunteer teams across a global IRC network.</p>
+            <div class="signal-stats">
+              <span><i></i> Secure identity</span>
+              <span><i></i> Community channels</span>
+            </div>
+          </article>
+
+          <article class="hero-card login-card">
+			<div class="login-card-inner">
+			  <div class="terminal-header">
+				<span class="terminal-title">User Account Login</span>
+				<svg class="login-icon" viewBox="0 0 24 24" aria-hidden="true">
+				  <path fill="currentColor" d="M12 12a4 4 0 1 0-4-4a4 4 0 0 0 4 4zm0 2c-4.42 0-8 2.24-8 5v1a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-1c0-2.76-3.58-5-8-5z"/>
+				</svg>
+			  </div>
+    
+			  <form action="https://users.dal.net" method="post" class="login-form">
+				<div class="field">
+				  <label for="nickname">Nickname</label>
+				  <input type="text" maxlength="30" name="nick" id="nickname" autocomplete="username" placeholder="Enter your nickname" required />
+				</div>
+
+				<div class="field">
+				  <label for="nickpass">Password</label>
+				  <input type="password" maxlength="64" name="password" id="nickpass" autocomplete="current-password" placeholder="Enter your password" required />
+				</div>
+
+				<button type="submit">Login to Users Corner</button>
+			  </form>
+			</div>
+		  </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="connect-stage">
+      <div class="shell connect-panel">
+        <div class="connect-orbit" aria-hidden="true">
+          <div class="orbit-shell orbit-one"></div>
+          <div class="orbit-shell orbit-two"></div>
+          <span class="orbit-dot dot-one"></span>
+          <span class="orbit-dot dot-two"></span>
+          <span class="orbit-dot dot-three"></span>
+          <span class="service-node service-a">irc.dal.net</span>
+          <span class="service-node service-b">NickServ</span>
+          <span class="service-node service-c">ChanServ</span>
+          <span class="service-node service-d">#Help</span>
+          <span class="service-node service-e">WebChat</span>
+        </div>
+
+        <div class="connect-copy compact-copy">
+          <span class="section-kicker">QUICK CONNECT</span>
+          <h2>Join DALnet in seconds.</h2>
+          <p>Pick a nickname, choose a channel and connect instantly through DALnet WebChat.</p>
+        </div>
+
+        <form class="connect-form connect-form-wide" action="https://www.dal.net/webchat/" method="get">
+          <label>
+            <span>Nickname</span>
+            <input type="text" maxlength="30" name="nick" autocomplete="nickname" placeholder="Choose a nickname">
+          </label>
+          <label>
+            <span>Channel</span>
+            <input type="text" maxlength="30" name="channels" value="#dragonrealm">
+          </label>
+          <button type="submit">Connect <span>→</span></button>
+        </form>
+      </div>
+    </section>
+
+    <section class="about-section shell">
+      <div class="section-heading">
+        <span class="section-index">01</span>
+        <div>
+          <span class="section-kicker">ABOUT DALNET</span>
+          <h2>One network. Many ways to participate.</h2>
+        </div>
+      </div>
+
+      <div class="about-layout">
+        <article class="about-copy wide-copy">
+          <p class="lead">Started in 1994 as an alternative to the overburdened networks of its time, DALnet grew into a vibrant and friendly IRC community. It pioneered nickname and channel registration, giving users practical tools to protect their identity and their space online.</p>
+          <p>Over the years, DALnet has placed a strong emphasis on user wellbeing, documentation and accessible support. From services and help channels to coders, staff and volunteer teams, the network continues to be sustained by people who care about IRC as a living form of online communication.</p>
+          <p>DALnet's future depends on those volunteers and on the users who still value direct conversation, open communities and the culture that grew around Internet Relay Chat.</p>
+          <div class="about-actions">
+            <a class="text-link" href="https://www.dal.net/webchat/">Open browser chat <span>↗</span></a>
+            <a class="text-link" href="http://docs.dal.net">Read DALnet documentation <span>↗</span></a>
+          </div>
+        </article>
+
+        <aside class="stack-panel">
+          <div class="mini-card">
+            <span class="mini-kicker">COMMUNITY</span>
+            <h3>Volunteer-powered</h3>
+            <p>DALnet is supported by teams, helpers, coders and staff who keep the network available and useful.</p>
+          </div>
+          <div class="mini-card">
+            <span class="mini-kicker">SERVICES</span>
+            <h3>Identity + channel tools</h3>
+            <p>NickServ and ChanServ help users register nicknames, manage access and protect channels.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="news-section shell">
+      <div class="section-heading compact">
+        <span class="section-index">02</span>
+        <div>
+          <span class="section-kicker">NETWORK FEED</span>
+          <h2>Latest from DALnet.</h2>
+        </div>
+        <a class="view-all" href="https://www.dal.net/news/">View archive ↗</a>
+      </div>
+
+      <div class="news-grid">
+        <a class="news-card featured" href="https://www.dal.net/news/shownews.php?id=185">
+          <span class="news-type">SERVER UPDATE</span>
+          <h3>New server: eon.*</h3>
+          <p>A new server joins the DALnet network.</p>
+          <span class="news-arrow">↗</span>
+        </a>
+        <a class="news-card" href="https://www.dal.net/news/shownews.php?id=183">
+          <span class="news-type">NETWORK</span>
+          <h3>New IX server: nibiru</h3>
+          <p>Read the latest server announcement.</p>
+          <span class="news-arrow">↗</span>
+        </a>
+        <a class="news-card" href="https://www.dal.net/news/shownews.php?id=181">
+          <span class="news-type">SOFTWARE</span>
+          <h3>Bahamut 2.2.4 release</h3>
+          <p>Latest release information for DALnet's IRC daemon.</p>
+          <span class="news-arrow">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="gateway-section">
+      <div class="shell gateway-grid">
+        <div class="gateway-heading">
+          <span class="section-kicker">DALNET GATEWAYS</span>
+          <h2>Everything you need to navigate the network.</h2>
+        </div>
+
+        <div class="gateway-links">
+          <a href="http://docs.dal.net"><span class="gateway-num">01</span><div><strong>Documentation</strong><small>Guides, services and IRC help</small></div><b>↗</b></a>
+          <a href="https://www.dal.net/services/"><span class="gateway-num">02</span><div><strong>Services</strong><small>NickServ, ChanServ and network services</small></div><b>↗</b></a>
+          <a href="https://www.dal.net/servers/"><span class="gateway-num">03</span><div><strong>Servers</strong><small>Find a DALnet server and connect</small></div><b>↗</b></a>
+          <a href="https://www.dal.net/admin/teams.php"><span class="gateway-num">04</span><div><strong>Teams</strong><small>Meet the volunteers behind DALnet</small></div><b>↗</b></a>
+          <a href="https://www.dal.net/kb/"><span class="gateway-num">05</span><div><strong>Knowledge Base</strong><small>Frequently asked questions and answers</small></div><b>↗</b></a>
+          <a href="http://help.dal.net"><span class="gateway-num">06</span><div><strong>Help</strong><small>Find live and written user assistance</small></div><b>↗</b></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-section shell">
+      <div class="info-panel">
+        <div>
+          <span class="section-kicker">INFO</span>
+          <h2>Policies, resources and support</h2>
+        </div>
+        <div class="info-links">
+          <a href="https://www.dal.net?page=AUP">Acceptable Use Policy</a>
+          <a href="https://www.dal.net/?page=DMCA">DMCA Registered Agent</a>
+          <a href="https://www.dal.net/?page=emailinfo">Email Address Security</a>
+          <a href="https://www.dal.net?page=DALnet's%20Mass%20Advertising%20Policy">Mass Advertising Policy</a>
+          <a href="https://www.dal.net/?page=DALnet Policies and Procedures">Policies and Procedures</a>
+          <a href="https://www.dal.net/sitemap.php">Site Map</a>
+          <a href="https://www.dal.net/?page=sabuse">Services Abuse</a>
+        </div>
+      </div>
+
+      <div class="tip-panel">
+        <span class="section-kicker">TIP OF THE DAY</span>
+        <p>Not sure what <strong>lol</strong>, <strong>afk</strong> and other Internet acronyms mean?</p>
+        <a href="http://docs.dal.net/docs/acronyms.html">Read the acronyms guide ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-main simple-footer">
+      <div class="footer-copy">
+        <strong>DALnet IRC Network</strong>
+        <p>Connecting people through Internet Relay Chat since 1994.</p>
+      </div>
+      <div class="footer-nav">
+        <div><strong>Network</strong><a href="https://www.dal.net/servers/">Servers</a><a href="https://www.dal.net/news/">News</a><a href="https://www.dal.net/admin/teams.php">Teams</a></div>
+        <div><strong>Help</strong><a href="http://docs.dal.net">Documentation</a><a href="http://help.dal.net">Help</a><a href="https://www.dal.net/kb/">KB / FAQ</a></div>
+        <div><strong>Connect</strong><a href="https://www.dal.net/webchat/">WebChat</a><a href="https://www.dal.net/services/">Services</a><a href="https://users.dal.net">Users</a></div>
+      </div>
+    </div>
+    <div class="shell footer-bottom">
+      <span>© 1999–2026 DALnet IRC Network. All rights reserved.</span>
+      <div><a href="https://www.dal.net/?page=DMCA">DMCA Registered Agent</a><a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a><a href="http://validator.w3.org/check?uri=referer">HTML</a></div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
