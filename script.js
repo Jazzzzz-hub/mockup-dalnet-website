@@ -5,11 +5,53 @@
   if(menuToggle && nav){
     menuToggle.addEventListener('click',()=>{
       const open = nav.classList.toggle('open');
-      menuToggle.setAttribute('aria-expanded',String(open));
+      menuToggle.setAttribute('aria-expanded', String(open));
     });
   }
 
-  // 2. Canvas Network Animation (Faster)
+  // 2. Main Dropdowns (Users, Info, etc.)
+  document.querySelectorAll('.nav-group > button').forEach(button => {
+    button.addEventListener('click', function(e) {
+      if (window.innerWidth <= 768) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        
+        document.querySelectorAll('.nav-group.open').forEach(g => {
+          if (g !== this.parentElement) g.classList.remove('open');
+        });
+
+        this.parentElement.classList.toggle('open');
+      }
+    }, true);
+  });
+
+  // 3. Sub-Menu Fix (Channels) - Exact previous working logic
+  document.querySelectorAll('.nav-sub-btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation(); 
+      
+      const sideMenu = this.nextElementSibling;
+      if (sideMenu && sideMenu.classList.contains('nav-popover-side')) {
+        document.querySelectorAll('.nav-popover-side.show-side').forEach(s => {
+          if (s !== sideMenu) s.classList.remove('show-side');
+        });
+        sideMenu.classList.toggle('show-side');
+      }
+    });
+  });
+
+  // 4. Close menus when clicking outside
+  document.addEventListener('click', function(e) {
+    if (window.innerWidth <= 768) {
+      if (!e.target.closest('.primary-nav')) {
+        document.querySelectorAll('.nav-group.open').forEach(g => g.classList.remove('open'));
+        document.querySelectorAll('.nav-popover-side.show-side').forEach(s => s.classList.remove('show-side'));
+      }
+    }
+  });
+
+  // 5. Canvas Network Animation
   const canvas = document.getElementById('network-bg');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(!canvas) return;
@@ -26,7 +68,6 @@
     const count=Math.max(24,Math.min(62,Math.floor((w*h)/26000)));
     nodes=Array.from({length:count},()=>({
       x:Math.random()*w,y:Math.random()*h,
-      // 🚀 SPEED INCREASED HERE: Changed from .16 to .4
       vx:(Math.random()-.5)*.6,vy:(Math.random()-.5)*.4,
       r:Math.random()*1.2+.45
     }));

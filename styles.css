@@ -355,137 +355,133 @@ main {
    MOBILE RESPONSIVE FIXES (ACTUAL CODE)
    ========================================= */
 @media (max-width: 768px) {
-  .header-main {
+    .header-main {
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    gap: 20px;
+    padding: 5px 20px 20px 20px !important; /* 0 top padding, 20px for the rest */
+    gap: 10px !important; /* Brings the search bar closer to the logo too */
   }
 
-  /* 2. Logo: Top, Centered, Large */
-    .brand {
-    height: 150px; !important; /* Removes the 72px desktop restriction */
+  .brand {
+    height: 140px; !important;
     display: flex;
     justify-content: center;
-	margin-bottom: 0px;
+    margin-bottom: 5px;
   }
   .brand img {
-    height: 230px !important; /* Force the new larger size */
+    height: 220px !important;
     width: auto !important;
-    transform: none !important; /* Completely removes the desktop scaling */
+    transform: none !important;
   }
-  /* 3. Search Bar: Second row, visible */
+
   .header-actions {
     width: 100%;
     display: flex;
     justify-content: center;
   }
   .site-search {
-    display: flex !important; /* Forces search bar to show */
+    display: flex !important;
     width: 100%;
     max-width: 400px;
     min-width: 0;
   }
   
-  /* Hide 'Menu' button and 'Status' chip for clean look */
   .menu-toggle, .status-chip {
     display: none !important;
   }
 
-  /* 4. Menu Values: Expanded below */
   .primary-nav {
-    display: block !important; /* Forces menu to be open */
+    display: block !important;
     width: 100%;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 20px;
   }
+
+  /* 5-Column Grid Layout */
   .nav-shell {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    padding: 0;
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 8px !important;
+    padding: 10px !important;
+    justify-items: center !important;
   }
+
   .nav-shell > a, 
   .nav-group > button {
-    padding: 8px 4px;
-    font-size: 14px;
+    width: 100% !important;
+    text-align: center !important;
+    padding: 10px 5px !important;
+    font-size: 14px !important;
   }
   
-  /* Hide dropdown sub-menus on mobile */
+  /* Main Dropdowns */
   .nav-popover {
-    display: dropdown !important;
+    display: none !important;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 220px;
+    background: rgba(8, 19, 33, 0.98);
+    border: 1px solid rgba(111, 181, 243, 0.2);
+    border-radius: 8px;
+    padding: 8px;
+    z-index: 1000;
   }
-  .hero {
-    grid-template-columns: 1fr;
-    padding: 40px 0 32px;
-    gap: 24px;
+
+  .nav-group.open .nav-popover {
+    display: grid !important;
   }
-  .hero h1 {
-    font-size: 2.2rem;
-    line-height: 1.1;
-  }
-  .hero-lede {
-    font-size: 1rem;
-  }
-  .hero-actions {
-    flex-direction: column;
-    gap: 12px;
-  }
-  .btn {
-    width: 100%;
-    justify-content: center;
-    padding: 14px;
-  }
-  .hero-facts {
+
+  /* Submenu (Channels) - Exact previous fix */
+  .nav-subgroup {
+    position: relative;
     width: 100%;
   }
-  .hero-facts div {
-    flex: 1;
-    min-width: auto;
-    text-align: center;
+
+  .nav-popover-side {
+    display: none;
+    position: absolute !important;
+    left: 100% !important;
+    top: 0 !important;
+    width: 220px !important;
+    background: rgba(8, 19, 33, 0.98) !important;
+    border: 1px solid rgba(111, 181, 243, 0.2) !important;
+    border-radius: 8px !important;
+    padding: 8px !important;
+    z-index: 1001 !important;
   }
-  .connect-panel {
-    grid-template-columns: 1fr;
-    padding: 32px 20px;
-    gap: 24px;
+
+  .nav-popover-side.show-side {
+    display: grid !important;
   }
-  .connect-form {
-    grid-template-columns: 1fr;
-    gap: 12px;
+
+  .nav-popover-side a {
+    padding: 10px 12px;
+    margin: 2px 4px;
+    text-align: left;
+    font-size: 13px;
   }
-  .connect-form input,
-  .connect-form button {
-    height: 54px;
-    font-size: 16px;
-  }
-  .news-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  .gateway-links {
-    grid-template-columns: 1fr;
-  }
-  .info-section {
-    grid-template-columns: 1fr;
-  }
-  .info-links {
-    grid-template-columns: 1fr;
-  }
-  .footer-main {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 24px;
-  }
-  .footer-nav {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .footer-bottom {
-    flex-direction: column;
-    text-align: center;
-    gap: 12px;
-  }
+
+  /* Other Mobile Fixes */
+  .hero { grid-template-columns: 1fr; padding: 40px 0 32px; gap: 24px; }
+  .hero h1 { font-size: 2.2rem; line-height: 1.1; }
+  .hero-lede { font-size: 1rem; }
+  .hero-actions { flex-direction: column; gap: 12px; }
+  .btn { width: 100%; justify-content: center; padding: 14px; }
+  .hero-facts { width: 100%; }
+  .hero-facts div { flex: 1; min-width: auto; text-align: center; }
+  .connect-panel { grid-template-columns: 1fr; padding: 32px 20px; gap: 24px; }
+  .connect-form { grid-template-columns: 1fr; gap: 12px; }
+  .connect-form input, .connect-form button { height: 54px; font-size: 16px; }
+  .news-grid, .gateway-links, .info-links, .footer-nav { grid-template-columns: 1fr; }
+  .info-section { grid-template-columns: 1fr; }
+  .footer-main { grid-template-columns: 1fr; text-align: center; gap: 24px; }
+  .footer-bottom { flex-direction: column; text-align: center; gap: 12px; }
+
+  /* About Section Fix */
+  .about-layout { grid-template-columns: 1fr !important; }
+  .about-copy, .stack-panel { grid-column: 1 / -1 !important; width: 100% !important; }
+  .stack-panel { display: flex !important; flex-direction: column !important; gap: 16px !important; }
 }
 
 @media (max-width: 480px) {
